@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#123f2b">
+<title>Vân Hồ – Chạm vào núi rừng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --green:#123f2b;--green2:#2d6c4b;--gold:#d8a02a;
+  --cream:#f5f1e8;--text:#20372c;--muted:#68756d;
+  --line:#e5e9e5;--shadow:0 8px 24px rgba(18,63,43,.10)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Be Vietnam Pro",Arial,sans-serif;color:var(--text);background:#fff;line-height:1.55}
+img{display:block;width:100%} a{text-decoration:none;color:inherit}
+.container{width:min(1180px,calc(100% - 28px));margin:auto}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:23px;font-weight:700;color:var(--green)}
+.logo small{display:block;font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:8px;letter-spacing:1.2px;text-align:center;font-weight:800}
+.menu{display:flex;gap:22px;font-size:13px;font-weight:800;color:var(--green)}
+.mobile-btn{display:none;border:0;background:none;font-size:27px;color:var(--green)}
+.hero{min-height:620px;display:flex;align-items:flex-end;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(3,25,15,.82)),url("hero.jpg") center/cover no-repeat}
+.hero-inner{padding:70px 0 58px;color:#fff}
+.script{font-family:"Dancing Script","Segoe Script",cursive;color:#efbf43;font-size:68px;line-height:.9}
+.hero h1{font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:clamp(38px,8vw,70px);font-weight:800;letter-spacing:-1.2px;line-height:1.02;max-width:700px;margin:12px 0 16px}
+.hero p{max-width:560px;font-size:16px;color:#f0f4f1;margin:0}
+.scroll{margin-top:26px;font-size:11px;font-weight:800;letter-spacing:2px}
+section{padding:58px 0}
+.section-title{text-align:center;margin:0 0 28px;color:var(--green);font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:32px;font-weight:800;letter-spacing:-.7px}
+.section-title span{display:block;font-family:"Be Vietnam Pro",Arial,sans-serif;color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:900;margin-bottom:5px}
+.destinations-wrap{overflow:hidden}
+.destinations{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:5px 3px 15px;scrollbar-width:thin}
+.destination{flex:0 0 78%;max-width:310px;scroll-snap-align:start;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+.destination img{height:190px;object-fit:cover}
+.destination-body{padding:15px}
+.destination h3{margin:0 0 4px;font-family:"Be Vietnam Pro",Arial,sans-serif;color:var(--green);font-size:19px;font-weight:700}
+.destination p{margin:0;color:var(--muted);font-size:13px}
+.hint{text-align:center;color:#8a938e;font-size:11px;margin-top:4px}
+.gallery-section{background:var(--cream)}
+.gallery-window{position:relative;width:100%;overflow:hidden;border-radius:0}
+.gallery-track{display:flex;width:max-content;animation:slide 55s linear infinite}
+.gallery-track:hover{animation-play-state:paused}
+.gallery-item{width:min(74vw,520px);height:min(55vw,390px);flex:none;margin-right:8px;position:relative}
+.gallery-item{cursor:pointer}.gallery-item img{width:100%;height:100%;object-fit:cover}
+.gallery-item span{position:absolute;left:12px;bottom:10px;background:rgba(0,0,0,.48);color:#fff;padding:5px 9px;border-radius:999px;font-size:11px}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+footer{background:#0b2c1e;color:#b9c9c0;text-align:center;padding:32px 0 25px;font-size:13px}
+footer strong{color:#fff;font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:18px}
+@media(min-width:800px){
+ .hero{min-height:690px}
+ .hero-inner{padding-bottom:90px}
+ .destination{flex-basis:285px}
+ .gallery-item{width:520px;height:360px}
+}
+@media(max-width:700px){
+ .container{width:min(100% - 24px,560px)}
+ .menu{display:none}.mobile-btn{display:block}
+ .hero{min-height:590px}
+ .hero-inner{padding:150px 0 50px}
+ .script{font-size:60px}
+ .hero h1{font-size:42px}
+ section{padding:50px 0}
+ .section-title{font-size:30px;margin-bottom:22px}
+ .destination{flex-basis:80%;max-width:300px}
+ .destination img{height:185px}
+ .gallery-item{width:86vw;height:60vw;min-height:220px;max-height:340px}
+}
+
+.lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px}
+.lightbox.show{display:flex}
+.lightbox img{max-width:96vw;max-height:88vh;width:auto;height:auto;object-fit:contain;border-radius:4px}
+.lightbox-close{position:absolute;top:14px;right:18px;color:#fff;background:rgba(255,255,255,.12);border:0;border-radius:50%;width:42px;height:42px;font-size:28px;line-height:1;cursor:pointer}
+.lightbox-caption{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);color:#fff;font-size:13px;background:rgba(0,0,0,.45);padding:6px 12px;border-radius:999px;white-space:nowrap}
+
+.video-section{background:#fff;padding-bottom:58px}
+.video-window{width:100%;overflow:hidden}
+.video-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:5px max(14px,calc((100vw - 1180px)/2)) 16px;scrollbar-width:thin}
+.video-card{flex:0 0 min(78vw,430px);scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+.video-frame{aspect-ratio:16/9;background:#111}
+.video-frame iframe{width:100%;height:100%;border:0;display:block}
+.video-card h3{margin:0;padding:13px 15px 15px;font-family:"Be Vietnam Pro",Arial,sans-serif;color:var(--green);font-size:17px;font-weight:700}
+@media(max-width:700px){
+ .video-card{flex-basis:84vw}
+ .video-track{padding-left:12px;padding-right:12px}
+}
+
+/* HERO — styled to match the supplied reference */
+.hero-content{
+  max-width:760px;
+  padding:0 0 34px;
+}
+.hero-brand{
+  display:block;
+  margin:0 0 12px;
+  color:#f4bd32;
+  font-family:"Dancing Script", cursive;
+  font-size:clamp(58px,9vw,96px);
+  font-weight:700;
+  line-height:.9;
+  letter-spacing:-1px;
+}
+.hero h1{
+  margin:0;
+  color:#fff;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(48px,7.2vw,82px);
+  font-weight:700;
+  line-height:.92;
+  letter-spacing:-1.8px;
+  text-transform:uppercase;
+  max-width:720px;
+}
+.hero p{
+  margin:28px 0 0;
+  max-width:650px;
+  color:#fff;
+  font-family:"Be Vietnam Pro",Arial,sans-serif;
+  font-size:clamp(16px,2vw,20px);
+  font-weight:500;
+  line-height:1.65;
+}
+.hero-scroll{
+  margin-top:30px;
+  color:#fff;
+  font-family:"Be Vietnam Pro",Arial,sans-serif;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+@media(max-width:700px){
+  .hero-content{padding:0 0 24px}
+  .hero-brand{font-size:58px;margin-bottom:10px}
+  .hero h1{font-size:47px;line-height:.94;letter-spacing:-1px}
+  .hero p{font-size:16px;line-height:1.55;margin-top:22px;max-width:100%}
+  .hero-scroll{font-size:11px;margin-top:24px}
+}
+
+
+.posts-section{background:#fff}.managed-posts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.managed-post{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column}.managed-post img{height:210px;object-fit:cover}.managed-post-body{padding:16px}.managed-post-body h3{margin:0 0 7px;color:var(--green);font-size:19px;line-height:1.3}.managed-post-body p{margin:0;color:var(--muted);font-size:13px}.managed-post-more{display:inline-block;margin-top:12px;color:var(--green2);font-weight:800;font-size:12px}@media(max-width:850px){.managed-posts{grid-template-columns:1fr 1fr}}@media(max-width:600px){.managed-posts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">VÂN HỒ<small>CHẠM VÀO NÚI RỪNG</small></a>
+    <nav class="menu">
+      <a href="#du-lich">DU LỊCH</a>
+      <a href="#ong-kinh">QUA ỐNG KÍNH</a><a href="#video">VIDEO</a>
+    </nav>
+    <button class="mobile-btn" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="script">Vân Hồ</div>
+    <h1>CHẠM VÀO NÚI RỪNG</h1>
+    <p>Khám phá một miền đất của cảnh sắc, những điểm đến và những khoảnh khắc đẹp ở Vân Hồ.</p>
+    <div class="scroll">↓ KÉO XUỐNG</div>
+  </div>
+</section>
+
+<section id="du-lich">
+  <div class="container">
+    <h2 class="section-title"><span>KHÁM PHÁ</span>DU LỊCH VÂN HỒ</h2>
+    <div class="destinations-wrap">
+      <div class="destinations">
+<a class="destination" href="canh-dong-suoi-lin.html"><img src="https://media.baoquangninh.vn/upload/image/202408/medium/2248716_0f5605996b34120943e707c8afb0b5a2.jpg" alt="Cánh đồng Suối Lìn"><div class="destination-body"><h3>Cánh đồng Suối Lìn</h3><p>Ruộng xanh giữa núi rừng và bản làng Dao.</p></div></a>
+<a class="destination" href="cho-phien-van-ho.html"><img src="https://media.vietnamplus.vn/images/c14f6479e83e315b4cf3a2906cc6a51e508a1cb13cecfe29a17ae78eb62e30b58da029ba9ee88585b7d1c9d0af230767a13f38bf026ca95a5ce41ea7d8e0ea8a/2201_son_la.jpg.webp" alt="Chợ phiên Vân Hồ"><div class="destination-body"><h3>Chợ phiên Vân Hồ</h3><p>Không gian giao lưu, mua bán và sắc màu vùng cao.</p></div></a>
+<a class="destination" href="suoi-nong-phu-mau.html"><img src="https://dulichvanho.com/uploads/news/2023_03/vh-giu-gin-ban-sac-van-hoa.jpg" alt="Suối nước nóng Phụ Mẫu"><div class="destination-body"><h3>Suối nước nóng Phụ Mẫu</h3><p>Dòng nước ấm giữa núi rừng Chiềng Yên.</p></div></a>
+<a class="destination" href="thac-nang-tat-nang.html"><img src="https://cafefcdn.com/203337114487263232/2022/8/15/photo-3-16605472656811823465489.jpg" alt="Thác Tạt Nàng"><div class="destination-body"><h3>Thác Tạt Nàng</h3><p>Dải nước trắng giữa đại ngàn.</p></div></a>
+<a class="destination" href="duong-chu-s.html"><img src="https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/04_2024/cung_duong_chu_s_moc_chau_1.jpg" alt="Đường chữ S"><div class="destination-body"><h3>Đường chữ S</h3><p>Cung đường uốn lượn nổi tiếng trên Quốc lộ 6.</p></div></a>
+<a class="destination" href="ban-du-lich-cong-dong.html"><img src="https://h3jd9zjnmsobj.vcdn.cloud/public/mytravelmap/images/2017/7/9/giangvansp27435/aafc7d133cf5596eb1a6d81e9c00c87f.jpg" alt="Chiềng Đi 1"><div class="destination-body"><h3>Chiềng Đi 1</h3><p>Điểm du lịch cộng đồng cấp tỉnh.</p></div></a>
+<a class="destination" href="rung-thong-hua-tat.html"><img src="https://dulichvietnam.com.vn/vnt_upload/news/07_2025/Du_lich_Van_Ho_Son_La_2.jpg" alt="Rừng thông Hua Tạt"><div class="destination-body"><h3>Rừng thông Hua Tạt</h3><p>Không gian thông xanh và bản làng Mông.</p></div></a>
+<a class="destination" href="doi-sim-suoi-bon.html"><img src="https://dulichvietnam.com.vn/vnt_upload/news/07_2025/Du_lich_Van_Ho_Son_La_2.jpg" alt="Đồi sim Suối Bon"><div class="destination-body"><h3>Đồi sim Suối Bon</h3><p>Sắc tím theo mùa trên những triền đồi.</p></div></a>
+      </div>
+      <div class="hint">← Vuốt ngang để xem thêm điểm đến →</div>
+    </div>
+  </div>
+</section>
+
+<section id="bai-viet" class="posts-section">
+  <div class="container">
+    <h2 class="section-title"><span>TIN TỨC · TRẢI NGHIỆM</span>BÀI VIẾT VÂN HỒ</h2>
+    <div id="managedPosts" class="managed-posts"><p class="hint">Đang tải bài viết…</p></div>
+  </div>
+</section>
+<section id="ong-kinh" class="gallery-section">
+  <div class="container">
+    <h2 class="section-title"><span>HÌNH ẢNH</span>VÂN HỒ QUA ỐNG KÍNH</h2>
+  </div>
+  <div class="gallery-window">
+    <div class="gallery-track" id="managedGallery"></div>
+  </div>
+</section>
+</main>
+
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Xem ảnh">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Đóng">×</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<section id="video" class="video-section">
+  <div class="container">
+    <h2 class="section-title"><span>VIDEO</span>VÂN HỒ QUA NHỮNG THƯỚC PHIM</h2>
+  </div>
+
+  <div class="video-window">
+    <div class="video-track">
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="Video Vân Hồ 01" loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+        </div>
+        <h3>Khám phá Vân Hồ</h3>
+      </article>
+
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="Video Vân Hồ 02" loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+        </div>
+        <h3>Sắc màu văn hóa</h3>
+      </article>
+
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="Video Vân Hồ 03" loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+        </div>
+        <h3>Nhịp sống Vân Hồ</h3>
+      </article>
+
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="Video Vân Hồ 04" loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+        </div>
+        <h3>Một ngày ở vùng cao</h3>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>VÂN HỒ – CHẠM VÀO NÚI RỪNG</strong>
+    <div>Trải nghiệm du lịch Vân Hồ qua những điểm đến và hình ảnh.</div><div style="margin-top:10px;font-size:11px"><a href="admin.html" style="color:#8fa99b">QUẢN TRỊ NỘI DUNG</a></div>
+  </div>
+</footer>
+
+<script>
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const closeBtn = document.getElementById('lightboxClose');
+function openLightbox(img,label=''){lightboxImg.src=img;lightboxImg.alt=label;lightboxCaption.textContent=label;lightbox.classList.add('show');document.body.style.overflow='hidden'}
+function closeLightbox(){lightbox.classList.remove('show');document.body.style.overflow='';lightboxImg.src=''}
+closeBtn.addEventListener('click', closeLightbox);lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+function esc(s=''){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function safe(s=''){return s.replace(/"/g,'%22')}
+async function loadManagedContent(){
+  try{
+    const [pr,gr]=await Promise.all([fetch('content/posts.json?v='+Date.now()),fetch('content/gallery.json?v='+Date.now())]);
+    const posts=pr.ok?await pr.json():[]; const gallery=gr.ok?await gr.json():[];
+    const postEl=document.getElementById('managedPosts');
+    postEl.innerHTML=posts.length?posts.slice(0,6).map(p=>`<article class="managed-post">${p.image?`<img src="${safe(p.image)}" alt="${esc(p.title)}">`:''}<div class="managed-post-body"><h3>${esc(p.title)}</h3>${p.excerpt?`<p>${esc(p.excerpt)}</p>`:''}<a class="managed-post-more" href="article.html?slug=${encodeURIComponent(p.slug)}">ĐỌC BÀI →</a></div></article>`).join(''):'<p class="hint">Chưa có bài viết mới.</p>';
+    const gEl=document.getElementById('managedGallery');
+    const items=gallery.length?gallery:[];
+    gEl.innerHTML=items.length?items.concat(items).map((g,i)=>`<div class="gallery-item"><img src="${safe(g.image)}" alt="${esc(g.alt||g.title||'Vân Hồ')}"><span>${String((i%items.length)+1).padStart(2,'0')} / ${items.length}</span></div>`).join(''):'<div style="padding:40px;color:#68756d">Chưa có ảnh trong thư viện.</div>';
+    gEl.querySelectorAll('.gallery-item').forEach((item,i)=>{const g=items[i%items.length];item.addEventListener('click',()=>openLightbox(g.image,g.title||g.alt||''))});
+  }catch(e){console.warn('Không tải được dữ liệu quản trị',e)}
+}
+loadManagedContent();
+</script>
+
+</body>
+</html>
