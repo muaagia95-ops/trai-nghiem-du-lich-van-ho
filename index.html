@@ -44,13 +44,15 @@ section{padding:58px 0}
 .destination p{margin:0;color:var(--muted);font-size:13px}
 .hint{text-align:center;color:#8a938e;font-size:11px;margin-top:4px}
 .gallery-section{background:var(--cream)}
-.gallery-window{position:relative;width:100%;overflow:hidden;border-radius:0}
-.gallery-track{display:flex;width:max-content;animation:slide 55s linear infinite}
-.gallery-track:hover{animation-play-state:paused}
+.gallery-window{position:relative;width:100%;overflow-x:auto;overflow-y:hidden;border-radius:0;cursor:grab;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.gallery-window::-webkit-scrollbar{display:none}
+.gallery-track{display:flex;width:max-content;will-change:transform}
+.gallery-window.is-dragging{cursor:grabbing}
+.gallery-window.is-dragging .gallery-track{pointer-events:none}
 .gallery-item{width:min(74vw,520px);height:min(55vw,390px);flex:none;margin-right:8px;position:relative}
 .gallery-item{cursor:pointer}.gallery-item img{width:100%;height:100%;object-fit:cover}
 .gallery-item span{position:absolute;left:12px;bottom:10px;background:rgba(0,0,0,.48);color:#fff;padding:5px 9px;border-radius:999px;font-size:11px}
-@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
 footer{background:#0b2c1e;color:#b9c9c0;text-align:center;padding:32px 0 25px;font-size:13px}
 footer strong{color:#fff;font-family:"Be Vietnam Pro",Arial,sans-serif;font-size:18px}
 @media(min-width:800px){
@@ -365,6 +367,65 @@ async function loadImagesFolder(){
   }
 }
 loadImagesFolder();
+
+/* Tự chạy nhẹ nhưng vẫn cho người xem vuốt/kéo tự do.
+   Khi người dùng chạm, vuốt hoặc kéo, chuyển động tự động sẽ dừng;
+   thả tay ra sẽ chạy lại sau một khoảng ngắn. */
+const galleryWindow = document.querySelector('.gallery-window');
+let autoScrollId = null;
+let autoPausedUntil = 0;
+let dragging = false;
+let startX = 0;
+let startScrollLeft = 0;
+
+function pauseGallery(ms = 2500){
+  autoPausedUntil = performance.now() + ms;
+}
+
+function autoScrollGallery(now){
+  if(!galleryWindow || !galleryTrack) return;
+  if(!dragging && now >= autoPausedUntil && galleryWindow.scrollWidth > galleryWindow.clientWidth){
+    galleryWindow.scrollLeft += 0.45;
+    if(galleryWindow.scrollLeft >= galleryWindow.scrollWidth - galleryWindow.clientWidth - 1){
+      galleryWindow.scrollLeft = 0;
+    }
+  }
+  autoScrollId = requestAnimationFrame(autoScrollGallery);
+}
+
+function startDrag(e){
+  if(e.type === 'mousedown' && e.button !== 0) return;
+  dragging = true;
+  galleryWindow.classList.add('is-dragging');
+  startX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+  startScrollLeft = galleryWindow.scrollLeft;
+  pauseGallery(10000);
+}
+function moveDrag(e){
+  if(!dragging) return;
+  const x = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+  const dx = x - startX;
+  if(Math.abs(dx) > 3) e.preventDefault();
+  galleryWindow.scrollLeft = startScrollLeft - dx;
+}
+function endDrag(){
+  if(!dragging) return;
+  dragging = false;
+  galleryWindow.classList.remove('is-dragging');
+  pauseGallery(2500);
+}
+
+galleryWindow.addEventListener('mousedown', startDrag);
+galleryWindow.addEventListener('mousemove', moveDrag);
+galleryWindow.addEventListener('mouseup', endDrag);
+galleryWindow.addEventListener('mouseleave', endDrag);
+galleryWindow.addEventListener('touchstart', startDrag, {passive:true});
+galleryWindow.addEventListener('touchmove', moveDrag, {passive:false});
+galleryWindow.addEventListener('touchend', endDrag, {passive:true});
+galleryWindow.addEventListener('wheel', () => pauseGallery(1800), {passive:true});
+galleryWindow.addEventListener('scroll', () => { if(!dragging) pauseGallery(700); }, {passive:true});
+
+requestAnimationFrame(autoScrollGallery);
 </script>
 
 </body>
